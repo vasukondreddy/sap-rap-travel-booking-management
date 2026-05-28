@@ -1,0 +1,5 @@
+@EndUserText.label: 'serive def for travel and booking'
+define service Zvas_service_defination {
+  expose ZVAS_TRAVEL_P  as Travel_data;
+  expose ZVAS_BOOKING_P as Bookings;
+}

@@ -1,0 +1,122 @@
+
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+    typeName: 'Travel',
+    typeNamePlural: 'Travels',
+    title: {
+        type: #STANDARD,
+        value: 'TravelPurpose'
+    },
+    description: {
+        value: 'DestinationCity'
+    }
+
+}
+annotate entity ZVAS_TRAVEL_P with
+{
+  @UI.facet: [
+    {
+      id: 'General',
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Travel Details',
+      position: 10
+    },
+    {
+      id: 'Bookings',
+      type: #LINEITEM_REFERENCE,
+      label: 'Bookings',
+      position: 20,
+      targetElement: '_Booking'
+    }
+  ]
+  
+  
+
+  @EndUserText.label: 'Travel ID'
+  //@UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  TravelId;
+
+  @UI.selectionField: [{ position: 10 }]
+  @EndUserText.label: 'Customer ID'
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  CustomerId;
+  @UI.selectionField: [{ position: 15 }]
+  @EndUserText.label: 'Customer Name'
+  @UI.lineItem: [{ position: 25 }]
+  @UI.identification: [{ position: 25 }]
+  CustomerName;
+
+  @UI.selectionField: [{ position: 20 }]
+  @EndUserText.label: 'Travel Purpose'
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  TravelPurpose;
+
+  @UI.selectionField: [{ position: 30 }]
+  @EndUserText.label: 'Source City'
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  SourceCity;
+
+  @UI.selectionField: [{ position: 40 }]
+  @EndUserText.label: 'Destination City'
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  DestinationCity;
+
+  @UI.selectionField: [{ position: 50 }]
+  @EndUserText.label: 'Start Date'
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  StartDate;
+
+  @UI.selectionField: [{ position: 60 }]
+  @EndUserText.label: 'End Date'
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  EndDate;
+
+  @UI.selectionField: [{ position: 70 }]
+@EndUserText.label: 'Status'
+
+@UI.lineItem: [
+  {
+    position: 80,
+    criticality: 'StatusCriticality'
+  }
+]
+
+@UI.identification: [
+  {
+    position: 80,
+    criticality: 'StatusCriticality'
+  },
+
+  {
+    type: #FOR_ACTION,
+    dataAction: 'acceptTravel',
+    label: 'Accept Travel',
+    position: 90
+  },
+
+  {
+    type: #FOR_ACTION,
+    dataAction: 'rejectTravel',
+    label: 'Reject Travel',
+    position: 100
+  },
+
+  {
+    type: #FOR_ACTION,
+    dataAction: 'cancelTravel',
+    label: 'Cancel Travel',
+    position: 110
+  }
+]
+StatusText;
+
+//OverallStatus;
+}

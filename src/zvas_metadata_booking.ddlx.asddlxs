@@ -1,0 +1,56 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+    typeName: 'Booking',
+    typeNamePlural: 'Bookings',
+    title: {
+        type: #STANDARD,
+        value: 'CarrierId'
+    },
+    description: {
+        value: 'FlightDate'
+    }
+}
+
+annotate entity ZVAS_BOOKING_P with
+{
+  @UI.facet: [
+    {
+      id: 'BookingInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Booking Information',
+      position: 10,
+      targetQualifier: 'Booking'
+    }
+  ]
+
+@EndUserText.label: 'Booking ID'
+@UI.lineItem: [{ position: 10 }]
+@UI.identification: [{ position: 10 }]
+BookingId;
+
+@EndUserText.label: 'Passenger Name'
+@UI.lineItem: [{ position: 20 }]
+@UI.identification: [{ position: 20 }]
+@UI.fieldGroup: [{ qualifier: 'Booking', position: 10 }]
+PassengerName;
+
+@EndUserText.label: 'Carrier ID'
+@UI.lineItem: [{ position: 30 }]
+@UI.identification: [{ position: 30 }]
+@UI.fieldGroup: [{ qualifier: 'Booking', position: 20 }]
+CarrierId;
+
+@EndUserText.label: 'Flight Date'
+@UI.lineItem: [{ position: 40 }]
+@UI.identification: [{ position: 40 }]
+@UI.fieldGroup: [{ qualifier: 'Booking', position: 30 }]
+FlightDate;
+
+@EndUserText.label: 'Seat Number'
+@UI.lineItem: [{ position: 50 }]
+@UI.identification: [{ position: 50 }]
+@UI.fieldGroup: [{ qualifier: 'Booking', position: 40 }]
+SeatNumber;
+}

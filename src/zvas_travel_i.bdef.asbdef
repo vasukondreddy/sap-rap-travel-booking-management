@@ -1,0 +1,67 @@
+managed implementation in class zbp_vas_travel_i unique;
+strict ( 2 );
+
+define behavior for zvas_travel_i //alias <alias_name>
+persistent table zvas_travel
+lock master
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  // action buttons
+action ( features : instance ) acceptTravel result [1] $self;
+action ( features : instance ) rejectTravel result [1] $self;
+action ( features : instance ) cancelTravel result [1] $self;
+
+  validation validate_dates on save { create; update; } // validation for travel plan
+  validation validateCities on save { create; update; }
+  validation validateCustomerName on save { create; update; }
+  determination set_initial_status on modify { create; } // determiation to make overal status as open(O) based on dates
+  field ( numbering : managed, readonly ) TravelId;
+  field ( readonly ) OverallStatus,StatusText; // it makes only read this field
+
+  field ( mandatory ) CustomerId,CustomerName,TravelPurpose,SourceCity,DestinationCity,StartDate,EndDate;
+  association _Booking { create; }
+  mapping for zvas_travel
+  {
+    TravelId           = travel_id;
+    CustomerId         = customer_id;
+    CustomerName       = customer_name;
+    TravelPurpose      = travel_purpose;
+    SourceCity         = source_city;
+    DestinationCity    = destination_city;
+    StartDate          = start_date;
+    EndDate            = end_date;
+    OverallStatus      = overall_status;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
+
+define behavior for zvas_booking_i //alias <alias_name>
+persistent table zvas_booking
+lock dependent by _Travel
+authorization dependent by _Travel
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+  validation validate_flight_date on save { create; update; } // Validation for booking date
+  validation validatePassenger on save { create; update; }
+  field ( numbering : managed, readonly ) BookingId;
+  field ( readonly ) TravelId;
+  field ( mandatory ) PassengerName,CarrierId,FlightDate,SeatNumber;
+  association _Travel;
+  mapping for zvas_booking
+  {
+    BookingId          = booking_id;
+    TravelId           = travel_id;
+    PassengerName      = passenger_name;
+    CarrierId          = carrier_id;
+    FlightDate         = flight_date;
+    SeatNumber         = seat_number;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}
